@@ -5,11 +5,11 @@ import os
 import golos
 import sintez
 
-cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # Камера
+#cam = cv2.VideoCapture(0)  # Камера
 names = []  # Словарь с именами
 
 
-def face_rec():
+def face_rec(cam):
     flag = 0
     for i in range(30):
         cam.read()  # получить изображение с камеры
@@ -44,7 +44,7 @@ def face_rec():
 
 
 def adding():
-    #names = ['Катя', 'Михаил', 'Константин', 'Елена', 'Руслан', 'Денис', 'Саня']
+    #names= ['Михаил']
     f = open('text.txt', 'w')
     for nam in names:
         f.write(nam + '\n')
@@ -65,4 +65,10 @@ if __name__ == '__main__':
     get()
     #print(names)
     face_rec()
+    adding()
+
+def go(cam):
+    get()
+    #print(names)
+    face_rec(cam)
     adding()

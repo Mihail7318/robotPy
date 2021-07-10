@@ -1,20 +1,19 @@
+import pyaudio
 import speech_recognition as sr
-import os
-import sys
-import webbrowser
 import golos
 
 def go():
     r = sr.Recognizer()
-    with sr.Microphone() as source:
-        golos.go("Здраствуйте как вас зовут?")
-        r.pause_threshold = 1
-        r.adjust_for_ambient_noise(source, duration=1)
+    r.energy_threshold=4000
+    golos.go("Здраствуйте, как вас зовут?")
+    with sr.Microphone(device_index = 2, sample_rate = 44100, chunk_size = 512) as source:
+        print ("listening")
         audio = r.listen(source)
-    try:
-        zadanie = r.recognize_google(audio, language="ru-RU").lower()
-        print("Вы сказали: " + zadanie)
-    except sr.UnknownValueError:
-        golos.go("Я вас не поняла")
-    return zadanie
+        print ("processing")
 
+    try:
+        message = (r.recognize_google(audio, language = 'ru', show_all=False))
+        print(message)
+    except:
+        print("что то не так")
+    return message
